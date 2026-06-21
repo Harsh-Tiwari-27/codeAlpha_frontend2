@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse — Music Player</title>
+  <meta name="description" content="Pulse Music Player — a premium, feature-rich music player with visualizer, favourites, and dynamic album art." />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Phosphor Icons (CDN) -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+</head>
+<body>
+
+  <!-- Dynamic ambient background -->
+  <div id="dynamicBg"></div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="app">
+
+    <!-- ─── LEFT: Playlist ─────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="logo">Pulse</span>
+        <span class="queue-label">Queue</span>
+      </div>
+
+      <ul class="playlist" id="playlist" role="listbox" aria-label="Song queue"></ul>
+    </aside>
+
+    <!-- ─── RIGHT: Player ──────────────────────────────────── -->
+    <main class="player">
+
+      <!-- Mobile header (hamburger + logo) -->
+      <div class="mobile-header">
+        <button class="menu-btn" id="menuBtn" aria-label="Open playlist">
+          <i class="ph ph-list"></i>
+        </button>
+        <span class="mobile-logo">Pulse</span>
+        <div style="width:40px"></div><!-- spacer -->
+      </div>
+
+      <!-- Album Art -->
+      <div class="art-wrapper">
+        <div class="art-glow" id="artGlow"></div>
+        <img class="album-art" id="albumArt" src="" alt="Album cover" />
+        <div class="art-overlay"></div>
+        <div class="vinyl-dot"></div>
+      </div>
+
+      <!-- Audio Visualizer -->
+      <div class="visualizer-wrap" id="visualizerWrap">
+        <div class="vis-bars" id="visBars">
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+          <div class="vis-bar"></div>
+        </div>
+      </div>
+
+      <!-- Song Meta -->
+      <div class="song-meta">
+        <div class="song-title-row">
+          <h1 class="song-title" id="songTitle">Song Title</h1>
+          <button class="fav-btn" id="favBtn" aria-label="Favourite" title="Add to Favourites">♡</button>
+        </div>
+        <p class="song-artist" id="songArtist">Artist Name</p>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <span class="time" id="currentTime">0:00</span>
+        <div class="progress-bar" id="progressBar" role="slider"
+             aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="progress-thumb" id="progressThumb"></div>
+        </div>
+        <span class="time" id="duration">0:00</span>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button class="ctrl-btn secondary" id="shuffleBtn" aria-label="Shuffle" title="Shuffle">
+          <i class="ph ph-shuffle"></i>
+        </button>
+        <button class="ctrl-btn" id="prevBtn" aria-label="Previous song" title="Previous (←)">
+          <i class="ph ph-skip-back"></i>
+        </button>
+        <button class="ctrl-btn play-btn" id="playPauseBtn" aria-label="Play" title="Play/Pause (Space)">
+          <i class="ph ph-play" id="playIcon"></i>
+        </button>
+        <button class="ctrl-btn" id="nextBtn" aria-label="Next song" title="Next (→)">
+          <i class="ph ph-skip-forward"></i>
+        </button>
+        <button class="ctrl-btn secondary" id="repeatBtn" aria-label="Repeat" title="Repeat">
+          <i class="ph ph-repeat"></i>
+        </button>
+      </div>
+
+      <!-- Volume -->
+      <div class="volume-section">
+        <button class="vol-btn" id="muteBtn" aria-label="Mute">
+          <i class="ph ph-speaker-high" id="volumeIcon"></i>
+        </button>
+        <div class="vol-slider-wrap">
+          <input type="range" class="vol-slider" id="volumeSlider"
+                 min="0" max="1" step="0.01" value="1" aria-label="Volume" />
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Mini Player (mobile / scroll) -->
+  <div class="mini-player" id="miniPlayer">
+    <img class="mini-thumb" id="miniThumb" src="" alt="Mini cover" />
+    <div class="mini-info">
+      <div class="mini-title" id="miniTitle">Song Title</div>
+      <div class="mini-artist" id="miniArtist">Artist</div>
+    </div>
+    <div class="mini-controls">
+      <button class="mini-btn" id="miniPrevBtn" aria-label="Previous">
+        <i class="ph ph-skip-back"></i>
+      </button>
+      <button class="mini-btn mini-play-btn" id="miniPlayBtn" aria-label="Play">
+        <i class="ph ph-play" id="miniPlayIcon"></i>
+      </button>
+      <button class="mini-btn" id="miniNextBtn" aria-label="Next">
+        <i class="ph ph-skip-forward"></i>
+      </button>
+    </div>
+    <div class="mini-progress">
+      <div class="mini-progress-fill" id="miniProgressFill"></div>
+    </div>
+  </div>
+
+  <!-- Hidden audio element -->
+  <audio id="audio"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
