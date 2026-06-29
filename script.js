@@ -92,7 +92,7 @@ let favourites = new Set();
 const audio           = document.getElementById('audio');
 const albumArt        = document.getElementById('albumArt');
 const artGlow         = document.getElementById('artGlow');
-const dynamicBg       = document.getElementById('dynamicBg');
+const bgBlurImg       = document.getElementById('bgBlurImg');
 const songTitle       = document.getElementById('songTitle');
 const songArtist      = document.getElementById('songArtist');
 const playPauseBtn    = document.getElementById('playPauseBtn');
@@ -175,8 +175,10 @@ function updateFavUI() {
    DYNAMIC BACKGROUND
    ═══════════════════════════════════════════════════════════ */
 function setDynamicBackground(song) {
-  dynamicBg.style.setProperty('--dyn-color1', song.dynColor1 || '#7c5cfc');
-  dynamicBg.style.setProperty('--dyn-color2', song.dynColor2 || '#3b82f6');
+  // Full-screen blur background — update image source
+  if (bgBlurImg) {
+    bgBlurImg.src = song.cover;
+  }
 }
 
 
